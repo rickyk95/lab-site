@@ -1,0 +1,24 @@
+footer {
+  flex-grow: 0;
+  background-color: black;
+}
+
+i {
+  font-size: 50px;
+  margin-left: 3px;
+}
+
+span {
+  font-size: 20px;
+}
+
+@media screen and (max-width: 612px) {
+  i {
+    font-size: 28px;
+    margin-left: 1px;
+  }
+
+  span {
+    font-size: 10px;
+  }
+}

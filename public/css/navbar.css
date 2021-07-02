@@ -1,0 +1,17 @@
+.navbar div ul li a {
+  font-size: 20px;
+}
+
+.navbar div ul li a:hover {
+  background-color: gray;
+}
+
+@media screen and (max-width: 612px) {
+  .navbar div ul li {
+    font-size: 18px;
+  }
+
+  .navbar div ul li a {
+    font-size: 18px;
+  }
+}

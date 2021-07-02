@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.row {
+  margin: 0;
+}
+.carousel-wrapper {
+  position: relative;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.section {
+  position: relative;
+  width: 80%;
+  height: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-top: black solid 2px;
+}
+
+.col-6.h-100 {
+  background-image: url(/images/microscope.jpg);
+  background-size: cover;
+  background-repeat: none;
+}
+
+@media screen and (max-width: 612px) {
+  .carousel-wrapper,
+  .section {
+    width: 100%;
+  }
+}

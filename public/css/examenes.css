@@ -1,0 +1,12 @@
+* {
+  font-family: 'Playfair Display', serif;
+}
+
+.wrapper {
+  height: 70%;
+  width: 60%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow-y: scroll;
+}
