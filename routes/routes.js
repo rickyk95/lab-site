@@ -43,7 +43,7 @@ var transporter = nodemailer.createTransport({
     }
   });
   
-  console.log(process.env.SALUTE)
+
   
   var mailOptions = {
       from: process.env.EMAIL,
