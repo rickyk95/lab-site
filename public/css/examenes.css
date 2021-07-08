@@ -3,10 +3,31 @@
 }
 
 .wrapper {
-  height: 70%;
-  width: 60%;
+  height: 550px;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
   overflow-y: scroll;
 }
+
+.examenes-image {
+  background-image: url(/images/examenesimage2.png);
+  background-size: 600px 500px;
+  background-repeat: none;
+}
+
+@media screen and (max-width: 612px) {
+  .wrapper {
+    height: 350px;
+  }
+
+  .wrapper h2 {
+
+      font-size:15px;s
+  }
+
+  .col-6{
+    max-width:100%;
+    flex:none;
+ 
+  }
+}
+

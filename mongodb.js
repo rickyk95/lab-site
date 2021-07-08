@@ -1,16 +1,21 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://127.0.0.1:27017';
-const dbName = 'lab-db';
+//const url = 'mongodb://127.0.0.1:27017';
+//const dbName = 'lab-db';
+const url = process.env.MONGOURL;
 
-const getDb = (callback) =>{
+console.log(process.env.MONGOURL)
+console.log(process.env.MONGOURL)
 
-    MongoClient.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},  (error,client)=>{
+
+const getDb = (callback,name,connectionString) =>{
+
+    MongoClient.connect(connectionString,{useNewUrlParser:true,useUnifiedTopology: true},  (error,client)=>{
 
         if(error){
-            return console.log('error found')
+            return console.log('error found',error)
         }
 
-        const db = client.db(dbName)
+        const db = client.db(name)
        
         console.log('Successfully connected!')
 

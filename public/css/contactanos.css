@@ -2,6 +2,16 @@
   font-family: 'Playfair Display', serif;
 }
 
+button {
+  background-color: #4d857a;
+}
+
+button:hover {
+  background-color: white;
+  color: #4d857a;
+  border: 2px black solid;
+}
+
 @media screen and (max-width: 612px) {
   h1 {
     font-size: 20px;

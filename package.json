@@ -4,15 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "env-cmd -f./config/dev.env nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "googleapis": "^78.0.0",
     "mongodb": "^3.6.9",
     "nodemailer": "^6.6.1"
   }
+
+
 }

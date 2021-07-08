@@ -38,15 +38,16 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'labsanfelipe.sac@gmail.com',
-      pass: 'Octubre131064'
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
     }
   });
   
+  console.log(process.env.SALUTE)
   
   var mailOptions = {
-      from: 'labsanfelipe.sac@gmail.com',
-      to: 'rickyk95@hotmail.com',
+      from: process.env.EMAIL,
+      to:'epistemicmind2017@gmail.com',
       subject: 'Sending Email using Node.js',
       text: 'That was easy!',
       attachments:[
@@ -69,32 +70,45 @@ router.get('/contactanos',(req,res)=>{
 
 router.get('/faq', async (req,res)=>{
 
+  let preguntas;
+
   getMongoDb(async (db)=>{
 
-    let preguntas =  await db.collection('preguntas').find().toArray()
-
+     preguntas =  await db.collection('preguntas').find().toArray()
+    
     res.render('faq',{layout:false,preguntas})
 
-  })
-
-
+  },'lab-db',process.env.MONGOPRODUCTIONURL)
   
-
-
 })
 
 
-router.get('/examenes',  (req,res)=>{
 
+
+
+
+router.get('/examenes',(req,res)=>{
+
+  let examsArray = [];
   
-  getMongoDb( async (db)=>{
+  getMongoDb(async (db)=>{
 
-    let examsArray = await db.collection('examenes').find().toArray()
+     examsArray = await db.collection('examenes').find().toArray()
 
-    res.render('examenes',{layout:false,examsArray})
-  })
+     examsArray = examsArray.map((test)=>{
+
+      return test.name
+    }).sort()
+
+    console.log(examsArray)
    
+    
+    res.render('examenes',{layout:false,examsArray})
+  },'lab-db',process.env.MONGOPRODUCTIONURL)
+
 })
+
+ 
 
 
 
