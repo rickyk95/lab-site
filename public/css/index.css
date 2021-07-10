@@ -16,7 +16,7 @@
 .section {
   position: relative;
   width: 80%;
-  height: 50%;
+  height: 400px;
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
@@ -30,8 +30,13 @@
 }
 
 @media screen and (max-width: 612px) {
-  .carousel-wrapper,
-  .section {
+  .carousel-wrapper{
     width: 100%;
-  }
+    height: 200px; 
+}
+
+.section {
+
+  width:100%;
+  height:150px;
 }
