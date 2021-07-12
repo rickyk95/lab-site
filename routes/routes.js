@@ -221,7 +221,10 @@ try{
 
       mailOptions.to = process.env.EMAIL
       mailOptions.subject = `Mensaje de correo ${req.body.email}`
-      mailOptions.html = req.body.message
+      mailOptions.html = `<h5>Mensaje de ${req.body.nombre}:</h5>
+
+      
+                          <p>${req.body.message}</p>`;
 
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
