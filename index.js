@@ -22,7 +22,19 @@ app.engine('handlebars',exphbs(
      
 app.get('/',(req,res)=>{
     
-    res.render('index',{layout:false})
+    res.render('index',{layout:false},(error,html)=>{
+
+        if(error){
+  
+          console.log(error)
+          res.status(404).send("<h1 style='text-align:center;'> Se ha econtrado un error </h1>")
+  
+        }else{
+  
+          res.status(200).send(html)
+  
+        }
+      })
 })
 
 

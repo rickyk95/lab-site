@@ -12,7 +12,8 @@ const getDb = (callback,name,connectionString) =>{
     MongoClient.connect(connectionString,{useNewUrlParser:true,useUnifiedTopology: true},  (error,client)=>{
 
         if(error){
-            return console.log('error found',error)
+            
+            throw Error("There was a connection error")
         }
 
         const db = client.db(name)

@@ -36,7 +36,10 @@ const connectToGoogle = async () =>{
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
+  service: 'Godaddy',
+  host: "smtpout.secureserver.net",  
+  secureConnection: true,
+  port: 465,
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD
@@ -47,7 +50,7 @@ var transporter = nodemailer.createTransport({
   
   var mailOptions = {
       from: process.env.EMAIL,
-      to:'epistemicmind2017@gmail.com',
+      to:'@gmail.com',
       subject: 'Sending Email using Node.js',
       text: 'That was easy!',
       attachments:[
@@ -63,7 +66,24 @@ var transporter = nodemailer.createTransport({
 
 router.get('/contactanos',(req,res)=>{
 
-    res.render('contactanos',{layout:false})
+
+
+  
+    res.render('contactanos',{layout:false},(error,html)=>{
+
+        if(error){
+          
+          res.status(404).send("<h1 style='text-align:center;'>Se ha encontrado un error</h1>")
+
+          return console.log(error)
+
+        }else{
+
+          res.send(html)
+        }
+    })
+
+
 })
 
 
@@ -74,9 +94,25 @@ router.get('/faq', async (req,res)=>{
 
   getMongoDb(async (db)=>{
 
-     preguntas =  await db.collection('preguntas').find().toArray()
+
+    try{
+
     
-    res.render('faq',{layout:false,preguntas})
+        preguntas =  await db.collection('preguntas').find().toArray()
+
+        if(preguntas.length === 0) throw "<h1>Se ha encontrado un error</h1>"
+        
+        res.render('faq',{layout:false,preguntas},(error,html)=>{
+
+            if (error) res.status(404).send("<h1 style='text-align:center;'>Ha habido un error</h1>")   
+            
+            res.status(200).send(html)
+        })
+
+    }catch(e){
+
+        res.status(500).send(e)
+    }
 
   },'lab-db',process.env.MONGOPRODUCTIONURL)
   
@@ -90,20 +126,43 @@ router.get('/faq', async (req,res)=>{
 router.get('/examenes',(req,res)=>{
 
   let examsArray = [];
+
   
   getMongoDb(async (db)=>{
 
-     examsArray = await db.collection('examenes').find().toArray()
+      try{
 
-     examsArray = examsArray.map((test)=>{
+         examsArray = await db.collection('examenes').find().toArray()
 
-      return test.name
-    }).sort()
+          examsArray = examsArray.map((test)=>{
 
-    console.log(examsArray)
-   
+            return test.name
+          }).sort()
+
+          if(examsArray.length === 0) throw "<h1> Se ha encontrado un error "
+
+
+          res.render('examenes',{layout:false,examsArray},(error,html)=>{
+
+            if(error){
+      
+              console.log(error)
+              res.status(404).send("<h1 style='text-align:center;'> Se ha econtrado un error </h1>")
+      
+            }else{
+      
+              res.status(200).send(html)
+      
+            }
+          })
+
+      }catch(e){
+
+          res.send(e)
+
+       }
+
     
-    res.render('examenes',{layout:false,examsArray})
   },'lab-db',process.env.MONGOPRODUCTIONURL)
 
 })
@@ -114,7 +173,7 @@ router.get('/examenes',(req,res)=>{
 
 router.post('/contacto',(req,res)=>{
 
-  console.log(__dirname)
+
     mailOptions.to = req.body.email
     mailOptions.subject = `Gracias por contactarnos ${req.body.nombre}`
     mailOptions.html = `<html>
@@ -147,6 +206,8 @@ router.post('/contacto',(req,res)=>{
                         </html>
 
                         `
+try{
+
 
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -156,7 +217,28 @@ router.post('/contacto',(req,res)=>{
         }
       });
 
-      res.send('Gracias por contactarnos')
+
+
+      mailOptions.to = process.env.EMAIL
+      mailOptions.subject = `Mensaje de correo ${req.body.email}`
+      mailOptions.html = req.body.message
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
+      
+
+      res.redirect('/')
+
+}catch{
+
+  res.redirect('/contacto')
+}
    
 })
 
