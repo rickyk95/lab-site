@@ -52,7 +52,6 @@ var transporter = nodemailer.createTransport({
       from: process.env.EMAIL,
       to:'@gmail.com',
       subject: 'Sending Email using Node.js',
-      text: 'That was easy!',
       attachments:[
         {
           fileName:'logo.png',
